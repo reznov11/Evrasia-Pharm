@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Сертификаты и лицензии {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="w3l_banner_nav_right">
+        <div class="privacy about">
+            <h3>Сертификаты и лицензии</h3>
+            <p class="animi">
+                Полное фирменное наименование на государственном языке: <strong>"Евразия-фарм"</strong> <br>
+                Юридический адрес: <strong>Кыргызская Республика, Чуйская область, Ысык-Атинский район, г. Кант, ул. Матросова, д. 20</strong> <br>
+                Деятельность ОсОО: оптовая неспециализированная торговля <strong>(код ГКЭД 46.90.0)</strong>, оптовая торговля фармацевтическими товарами <strong>(код ГКЭД 46.46.0)</strong>, оптовая торговля в специализированных магазинах и аптечных пунктах фармацевтическими товарами <strong>(код ГКЭД 47.73.0)</strong>
+                <br><br>
+            </p>
+            <div class="col-md-3 agileits_team_grid">
+                <a href="/static/certs/certification_2.pdf">
+                    <img class="img-responsive" style="background: url('/static/certs/certification_cor_1.png');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 220px;
+                    background-position: -9px -73px">
+                </a>
+                <h4>Свидетельство 1</h4>
+            </div>
+            <div class="col-md-3 agileits_team_grid">
+                <a href="/static/certs/Certificate of Business Reg.pdf">
+                    <img class="img-responsive" style="background: url('/static/certs/certification_cor_3.png');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 220px;
+                    background-position: -9px -73px">
+                </a>
+                <h4>Свидетельство 2</h4>
+            </div>
+            <div class="col-md-3 agileits_team_grid">
+                <a href="/static/certs/certification_3.pdf">
+                    <img class="img-responsive" style="background: url('/static/certs/certification_cor_2.png');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 220px;
+                    background-position: -9px -73px">
+                </a>
+                <h4>Куболук</h4>
+            </div>
+            <div class="col-md-3 agileits_team_grid">
+                <a href="/static/certs/certification_1.pdf">
+                    <img class="img-responsive" style="background: url('/static/certs/certification_cor_4.png');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 220px;
+                    background-position: -10px -44px">
+                </a>
+                <h4>Лицензия</h4>
+            </div>
+            <!-- <div class="">
+                <div class="event">
+                    <div class="pdf">
+                        <object data="static/certs/Certificate of Business Reg.pdf" type="application/pdf" width="100%" height="750" internalinstanceid="5" title="">
+                            <p>Нажмите - скачать книгу <a href="static/certs/Certificate of Business Reg.pdf">Скачать</a></p>
+                        </object>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="event">
+                    <div class="pdf">
+                        <object data="static/certs/certification_1.pdf" type="application/pdf" width="100%" height="750" internalinstanceid="5" title="">
+                            <p>Нажмите - скачать книгу <a href="static/certs/certification_1.pdf">Скачать</a></p>
+                        </object>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="event">
+                    <div class="pdf">
+                        <object data="static/certs/certification_2.pdf" type="application/pdf" width="100%" height="750" internalinstanceid="5" title="">
+                            <p>Нажмите - скачать книгу <a href="static/certs/certification_2.pdf">Скачать</a></p>
+                        </object>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="event">
+                    <div class="pdf">
+                        <object data="static/certs/certification_2.pdf" type="application/pdf" width="100%" height="750" internalinstanceid="5" title="">
+                            <p>Нажмите - скачать книгу <a href="static/certs/certification_3.pdf">Скачать</a></p>
+                        </object>
+                    </div>
+                </div>
+            </div> -->
+            <source>
+        </div>
+    <!-- //about -->
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
+
+<!-- {% block tail_js %}
+    <script src="{{url_for('main.js_provider', filename='jquery.wmuSlider.js')}}"></script> 
+    <script>
+        $('.example1').wmuSlider();         
+    </script>
+{% endblock %} -->

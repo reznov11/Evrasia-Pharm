@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Контакты {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="w3l_banner_nav_right">
+    <!-- mail -->
+        <div class="mail">
+            <h3>Напишите нам</h3>
+            <div class="agileinfo_mail_grids">
+                <div class="col-md-4 agileinfo_mail_grid_left">
+                    <ul>
+                        <li><i class="fa fa-home" aria-hidden="true"></i></li>
+                        <li>адрес<span>Кыргызстан, г. Бишкек</span></li>
+                    </ul>
+                    <ul>
+                        <li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+                        <li>E-mail<span><a href="mailto:info@evrasia-pharm.kg">info@evrasia-pharm.kg</a></span></li>
+                    </ul>
+                    <ul>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i></li>
+                        <li>Телефон<span>(+996) 708 808 839</span></li>
+                    </ul>
+                </div>
+                <div class="col-md-8 agileinfo_mail_grid_right">
+                    <form action="{{ url_for('main.contact') }}" method="post">
+                        {{form.hidden_tag()}}
+                        <div class="col-md-6 wthree_contact_left_grid">
+                            {{ form.fullname(required="true", placeholder="ФИО") }}
+                            {% if form.fullname.errors %}
+                                {% for e in form.fullname.errors %}
+                                    <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                {% endfor %}
+                            {% endif %}
+                            {{ form.email(required="true", placeholder="E-mail") }}
+                            {% if form.email.errors %}
+                                {% for e in form.email.errors %}
+                                    <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 wthree_contact_left_grid">
+                            {{ form.telephone(required="true", placeholder="Номер телефона", minlength=7, maxlength=14) }}
+                            {% if form.telephone.errors %}
+                                {% for e in form.telephone.errors %}
+                                    <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                {% endfor %}
+                            {% endif %}
+                            {{ form.subject(required="true", placeholder="Тема") }}
+                            {% if form.subject.errors %}
+                                {% for e in form.subject.errors %}
+                                    <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="clearfix"> </div>
+                        {{ form.message(required="true", placeholder="Ваше сообщение") }}
+                        {% if form.message.errors %}
+                            {% for e in form.message.errors %}
+                                <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="col-md-6 wthree_contact_left_grid">
+                            {{ form.recaptcha() }}
+                            <!-- {% if form.recaptcha.errors %}
+                                {% for e in form.recaptcha.errors %}
+                                    <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                {% endfor %}
+                            {% endif %} -->
+                        </div>
+                        <div class="clearfix"></div>
+                        <br>
+                        <input type="submit" value="Отпрваить">
+                        <input type="reset" value="Очистить">
+                    </form>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    <!-- //mail -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93561.73013961293!2d74.52182065046192!3d42.87697950453192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7dc91b3c881%3A0x492ebaf57cdee27d!2sBishkek%2C+Kyrgyzstan!5e0!3m2!1sen!2s!4v1515884345101" style="border:0"></iframe>
+    </div>
+{% endblock %}

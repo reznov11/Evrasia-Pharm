@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Подтвердить заказ {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <style>
+        .form-group {
+            margin-bottom: 35px;
+        }
+        .form-card {
+            width: 100%;
+            float: left;
+            display: inline-block;
+        }
+        #block_order{
+            background: rgb(245, 245, 245);
+            padding: 20px;
+        }
+        .control-label {
+            margin-bottom: 15px;
+        }
+    </style>
+    <div class="w3l_banner_nav_right">
+        <div class="privacy about col-md-12">
+            <div class="col-md-6 col-sm-6 col-xs-12" id="block_order">
+                <div class="form-card">
+                    <form action="" method="post">
+                        <div class='form-group'>
+                            <div class='form-group'>
+                                <label class="control-label locked" for="name-input-field">ФИО <span style="color:#c30;">*</span></label>
+                                <input id="name" name="name" class="form-control" type="text" required="" {% if current_user.username %} value="{{current_user.username}}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="form-group locked">
+                            <div class='form-group'>
+                                <label class="control-label locked" for="desc-input-field">Адрес <span style="color:#c30;">*</span></label>
+                                <input id="address" name="address" type="text" placeholder="Ваш адрес" class="form-control locked" required="" {% if current_user.address %} value="{{current_user.address}}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class='form-group'>
+                            <div class='form-group'>
+                                <label class="control-label locked" for="phone-input-field">Телефон <span style="color:#c30;">*</span></label>
+                                <input id="phone_number" name="phone_number" minlength="12" maxlength="12" type="telephone" placeholder="996xxxxxxxxx" class="form-control locked" required="" {% if current_user.telephone %} value="{{current_user.telephone}}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="form-group locked">
+                            <div class='form-group'>
+                                <label class="control-label locked" for="email-input-field">E-mail (не обязательно)</label>
+                                <input id="email" name="email" type="email" placeholder="email@email.com" class="form-control locked" required="" {% if current_user.email %} value="{{current_user.email}}" {% endif %}>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Разместить заказ</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <!--REVIEW ORDER-->
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h>Сумма заказа</h4>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        {% for key, value in g.shopping_cart.iteritems() %}
+                            <div class="col-md-12">
+                                <strong>{{ value['title'] }}</strong>
+                                <div class="pull-right">
+                                    <span style="color:rgb(204, 51, 0);">{{ "%.2f сом"|format(value['price']) }}</span> |
+                                    <strong>
+                                        {% if value["qty"] > 1  %}
+                                            x{{value["qty"]}}
+                                        {% else %}
+                                            {{value["qty"]}}
+                                        {% endif %}
+                                    </strong>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- <div class="col-md-12">
+                            <small>Shipping</small>
+                            <div class="pull-right"><span>-</span></div>
+                            <hr>
+                        </div> -->
+                        <div class="col-md-12">
+                            <hr>
+                            <strong style="color:#555;">Итого:</strong>
+                            <div class="pull-right"><span style="font-size: 20px; color:#c30;">{{ "%.2f"|format(g.total) }}</span> <strong style="color:#555;">сомов</strong></div>
+                            <hr>
+                            <a href="{{url_for('products.shopping_cart')}}" class="btn btn-default btn-sm btn-block">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                Назад в корзину
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--REVIEW ORDER END-->
+            </div>
+        </div>
+    <!-- //confirm order -->
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

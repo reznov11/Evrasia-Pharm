@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Карзина {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <style>
+        .panel-heading {
+            padding: 10px;
+        }
+        .panel-title {
+            margin-top: 10px;
+        }
+        .btn-continue {
+            background: rgb(204, 50, 43);
+            color: rgb(255, 255, 255);
+            transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -ms-transition: all .4s ease-in-out;
+        }
+        .btn-continue:hover {
+            opacity: 0.8;
+            color: rgb(255, 255, 255);
+            transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -ms-transition: all .4s ease-in-out;
+        }
+    </style>
+    <div class="banner">
+        <div class="w3l_banner_nav_right">
+        <!-- events -->
+            <div class="events">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    {% if g.shopping_cart|length > 0 %}
+                        <a class="btn btn-md btn-default pull-right" id="clearCart">
+                            <i class="fa fa-trash fa-fw"></i>
+                            Отчистить корзину
+                        </a>
+                    {% endif %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Продукт</th>
+                                <th>Изменить</th>
+                                <th class="text-center">Категория</th>
+                                <th class="text-center">Каличество</th>
+                                <th class="text-center">Суммерный</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in display_cart.iteritems() %}
+                                <tr>
+                                    <td class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="{{url_for('products.description', product_slug=value['slug'])}}"> <img class="media-object" src="{{ value['image'] }}" style="width: 100px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="{{url_for('products.description', product_slug=value['slug'])}}">{{ value['title'] }}</a></h4>
+                                                <span>Цена: </span><span class="text-success"><strong>{{ "%.2f сом"|format(value['price']) }}</strong></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                                        <input type="number" class="form-control product_amount" data-product="{{ key }}" value="{{value['qty']}}" min="1" max="10" step="1"> 
+                                    </td>
+                                    <td class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><strong>{{ value['category'] }}</strong></td>
+                                    <td class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                        <strong>
+                                            {% if value["qty"] > 1  %}
+                                            x{{value["qty"]}}
+                                            {% else %}
+                                            {{value["qty"]}}
+                                            {% endif %}
+                                        </strong>
+                                    </td>
+                                    <td class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><strong>{{ "%.2f "|format( value['qty'] * value['price'] ) }}</strong></td>
+                                    <td class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <a href="javascript:void(0);" class="btn btn-danger delete_from_cart" data-product="{{ key }}">
+                                        <span class="glyphicon glyphicon-remove"></span> удалить
+                                    </a></td>
+                                </tr>
+                            {% endfor %}
+                            
+                            {% if display_cart %}
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>Доставка</h5></td>
+                                    <td class="text-right"><h5><strong>150 сомов</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h3>Итого</h3></td>
+                                    <td class="text-right"><h3><strong>{{ "%.2f" % total }}</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>
+                                    <a href="{{url_for('catalog.index')}}" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> Продолжить покупки
+                                    </a></td>
+                                    <td>
+                                    <a href="{{ url_for('products.submit_order') }}" class="btn btn-success">
+                                        Подтвердить заказ <span class="glyphicon glyphicon-play"></span>
+                                    </a></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td><p style="color:#c30;">Карзина пустая .</p></td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    <!-- //events -->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
+
+{% block tail_js %}
+    {% compress 'js' %}
+        <script type="text/javascript">
+        
+            $(document).ready(function(){
+
+                // assign oldVal data attribute at once on document ready
+                $(".product_amount:input").data('oldVal', $(".product_amount:input").val());
+                
+                $(".product_amount:input").change(function(){
+                    //get the newVal on change
+                    var newVal = $(this).val();
+                    // get the oldVal from data attribute 
+                    var oldVal = parseFloat($(this).data('oldVal'));
+                    // do stuff you need here
+                    if ( newVal > oldVal) {
+                        var product = $(this).data('product');
+                        var amountProduct = $(this).val();
+                        var csrf_token = '{{csrf_token()}}';
+
+                        $('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+                        setTimeout(function(){
+                            $.ajax({
+                                type: 'post',
+                                cache: false,
+                                url: "/products/add_to_cart/"+product,
+                                beforeSend: function(xhr, settings) {
+                                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                                    }
+                                },
+                                complete: function(){
+                                    $('.loading').html('<div class="spinner" style="display:none;"></div>');
+                                },
+                                success: function(data){
+                                    $('body').load('{{request.url}}');
+                                }
+                            });
+                        }, 1000);
+                    } else {
+                        var product = $(this).data('product');
+                        var amountProduct = $(this).val();
+                        var csrf_token = '{{csrf_token()}}';
+
+                        $('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+                        setTimeout(function(){
+                            $.ajax({
+                                type: 'post',
+                                cache: false,
+                                url: "/products/delete-one-product/"+product,
+                                beforeSend: function(xhr, settings) {
+                                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                                    }
+                                },
+                                complete: function(){
+                                    $('.loading').html('<div class="spinner" style="display:none;"></div>');
+                                },
+                                success: function(data){
+                                    $('body').load('{{request.url}}');
+                                }
+                            });
+                        }, 1000);
+                    }
+                    //store the newVal as the oldVal for the next change
+                    $(this).data('oldVal', newVal)
+                })
+                .focus(function(){
+                    // assign oldVal data attribute on input focus
+                    $(this).data('oldVal', $(this).val());
+                });
+            });
+        
+            $('.delete_from_cart').on('click', function(event){
+                event.preventDefault();
+                var productId = $(this).data('product');
+                var csrf_token = '{{csrf_token()}}';
+                
+                $('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+                setTimeout(function(){
+                    $.ajax({
+                        type: 'post',
+                        cache: false,
+                        url: "/products/delete-product/"+productId,
+                        data: {
+                            product: productId
+                        },
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        },
+                        complete: function(){
+                            $('.loading').html('<div class="spinner" style="display:none;"></div>');
+                        },
+                        success: function(data){
+                            $('body').load('{{request.url}}');
+                        }
+                    });
+                }, 1000);
+            });
+
+            $('#clearCart').on('click', function(event){
+                event.preventDefault();
+                var csrf_token = '{{csrf_token()}}';
+                
+                $('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+                setTimeout(function(){
+                    $.ajax({
+                        type: 'post',
+                        cache: false,
+                        url: "/products/clear-cart",
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        },
+                        complete: function(){
+                            $('.loading').html('<div class="spinner" style="display:none;"></div>');
+                        },
+                        success: function(data){
+                            alert(data.cart);
+                            $('body').load('{{request.url}}');
+                        }
+                    });
+                }, 1000);
+            });
+
+        </script>
+    {% endcompress %}
+{% endblock %}

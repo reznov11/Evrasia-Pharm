@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME|capitalize}} - Регистрация {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="banner">
+        <div class="w3l_banner_nav_right">
+            <div class="clearfix"></div>
+            <div class="w3_login">
+                <h3>Регистрация</h3>
+                <div class="w3_login_module">
+                    <div class="module form-module">
+                        <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                            <div class="tooltip">Авторизация</div>
+                        </div>
+                        <div class="form">
+                            <h2>РЕГИСТРАЦИЯ НА САЙТЕ</h2>
+                            <form action="{{url_for('auth.registration')}}" method="post">
+                                {{g.register.hidden_tag()}}
+
+                                {{g.register.fullname(placeholder="ФИО", required="required")}}
+                                {% if g.register.fullname.errors %}
+                                    {% for e in g.register.fullname.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{g.register.email(placeholder="E-mail", required="required")}}
+                                {% if g.register.email.errors %}
+                                    {% for e in g.register.email.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{g.register.telephone(placeholder="Номер телефона", required="required")}}
+                                {% if g.register.telephone.errors %}
+                                    {% for e in g.register.telephone.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{g.register.password(placeholder="Пароль", required="required")}}
+                                {% if g.register.password.errors %}
+                                    {% for e in g.register.password.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                {{g.register.confirm_password(placeholder="Подтвердите пароль", required="required")}}
+                                {% if g.register.confirm_password.errors %}
+                                    {% for e in g.register.confirm_password.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{ g.register.recaptcha() }}
+                                <br>
+                                {{g.register.register()}}
+                            </form>
+                        </div>
+                        <div class="cta"><a href="#">Забыл пароль?</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+{% endblock %}
+
+{% block tail_js %}
+    <script>
+        $('.toggle').click(function(){
+            window.location = '{{url_for("auth.login")}}'; 
+            // // Switches the Icon
+            // $(this).children('i').toggleClass('fa-pencil');
+            // // Switches the forms  
+            // $('.form').animate({
+            // height: "toggle",
+            // 'padding-top': 'toggle',
+            // 'padding-bottom': 'toggle',
+            // opacity: "toggle"
+            // }, "slow");
+        });
+    </script>
+{% endblock %}

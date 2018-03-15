@@ -1,0 +1,370 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/fixes.html" as fixes %}
+
+{% block head %}
+  {{super()}}
+  {{fixes.ie8()}}
+{% endblock %}
+
+{% block html_attribs %} lang="en"{% endblock %}
+
+{% block title %} {% endblock %}
+
+{% block metas %}
+
+  {% for meta_tag in config.META_TAGS %}
+    {{meta_tag}}
+  {% endfor %}
+
+  <link rel="shortcut icon" href="{{url_for('main.images', filename='evrasia_logo.png')}}" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{url_for('main.css_provider', filename='flexslider.css')}}" type="text/css" media="screen" property="" />
+{% endblock %}
+
+{% block styles %}
+  {{super()}}
+  <link rel="stylesheet" href="{{url_for('main.css_provider', filename='font-awesome.css')}}">
+  <link rel="stylesheet" href="{{url_for('main.css_provider', filename='style.css')}}">
+  <link rel="stylesheet" href="{{url_for('main.css_provider', filename='toastr.min.css')}}">
+  <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<style type="text/css">
+		span.flask-moment {
+			display: block !important;
+    }
+	</style>
+{% endblock %}
+
+{% block navbar %}
+  <div class="loading"></div>
+  <!-- Black Top Header -->
+	<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="{{url_for('main.index')}}">Добро пожаловать!</a>
+		</div>
+		<div class="w3l_search">
+			<form action="{{ url_for('catalog.search_product') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+				<input type="text" name="productName" value="Ищите продукт ..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Ищите продукт ...';}" required>
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<div class="product_list_header" style="margin-left: 6.5555em;">
+      <ul class="nav navbar-nav w3l_header_right1">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #fff;padding:12px 15px;"> <span class="glyphicon glyphicon-shopping-cart"></span> {{ g.shopping_cart|length if g.shopping_cart else 0 }} - Товаров<span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-cart _scroll" id="shopping_ct" role="menu">
+            {% if g.shopping_cart %}
+              {% for key, value in g.shopping_cart.iteritems() %}
+                <li>
+                    <span class="item">
+                      <span class="item-left">
+                          <img src="{{ value['image'] }}" alt="{{ value['title'] }}" style="width:50px;height:50px;" />
+                          <span class="item-info">
+                              <a href="{{ url_for('products.description', product_slug=value['slug']) }}" style="color: #555;"><span>{{value['title']}}</span></a>
+                              <span>{{value['price']}}</span>
+                          </span>
+                      </span>
+                  </span>
+                </li>
+                <li class="divider"></li>
+              {% endfor %}
+            {% else %}
+                <p class="text-center" style="padding: 15px;color:#c30;">Корзина пустая</p>
+            {% endif %}
+            <li><a class="text-center" id="to_my_cart" href="{{url_for('products.shopping_cart')}}">просмотреть корзину</a></li>
+          </ul>
+        </li>
+      </ul>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+        {% if current_user.is_authenticated %}
+          <li class="dropdown profile_details_drop">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Привет, {{ current_user.username|truncate(6) }} <span class="caret"></span></a>
+            <div class="mega-dropdown-menu">
+              <div class="w3ls_vegetables">
+                <ul class="dropdown-menu drp-mnu">
+                  {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                      <li><a href="{{url_for('admin.index')}}" target="_blank"><i class="fa fa-sign-in pull-left" aria-hidden="true"></i> Панелка</a></li>
+                      <li class="divider"></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('profile.cabinet') }}"><i class="fa fa-user pull-left" aria-hidden="true"></i> Профиль</a></li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:void(0);" target="_blank"><i class="fa fa-cart-arrow-down pull-left" aria-hidden="true"></i> Мои заказы</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{url_for('auth.logout')}}"><i class="fa fa-sign-out pull-left" aria-hidden="true"></i> выйти</a></li>
+                  {% endif %}
+                </ul>
+              </div>                  
+            </div>
+          </li>
+        {% else %}
+          <li class="dropdown profile_details_drop">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+            <div class="mega-dropdown-menu">
+              <div class="w3ls_vegetables">
+                <ul class="dropdown-menu drp-mnu">
+                  <li><a href="{{url_for('auth.login')}}"><i class="fa fa-sign-in pull-left" aria-hidden="true"></i> Login</a></li> 
+                  <li><a href="{{url_for('auth.registration')}}"><i class="fa fa-user-plus pull-left" aria-hidden="true"></i> Sign Up</a></li>
+                </ul>
+              </div>                  
+            </div>
+          </li>
+        {% endif %}
+			</ul>
+    </div>
+<!-- 		<div class="w3l_header_right" style="padding-left: 1em;">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+                <li><a href="login.html"> <img src="{{url_for('main.images', filename='ru.png')}}" alt="Russian language" class="pull-left"> Русский</a></li>
+                <li class="divider"></li>
+								<li><a href="login.html"> <img src="{{url_for('main.images', filename='en.png')}}" alt="English language" class="pull-left"> English</a></li>
+							</ul>
+						</div>                  
+          </div>
+        </li>
+			</ul>
+		</div> -->
+		<div class="w3l_header_right1">
+			<h2><a href="{{url_for('main.contact')}}">Контакты</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+  </div>
+  <!-- Black Top Header End -->
+
+  <!-- Navbar -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="site_logo">
+				<a href="{{url_for('main.index')}}">
+					<img src="/static/images/logo.png" class="img-responsive" alt="Evrasia-Pharm" style="max-width:100%;">
+				</a>
+				<!-- <h1><a href="{{url_for('main.index')}}"><span>Evrasia</span> Pharm</a></h1> -->
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+          <li class="dropdown mega-dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">О компании<span class="caret"></span></a><i>/</i>				
+              <div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+                <div class="w3ls_vegetables">
+                  <ul>	
+                    <li><a href="{{url_for('main.about')}}" {% if request.endpoint == 'main.about' %}class="active_bar"{% endif %}>о нас</a></li><br>
+                    <hr>
+                    <li><a href="{{url_for('main.team')}}" {% if request.endpoint == 'main.team' %}class="active_bar"{% endif %}>Команда</a></li><br>
+                    <hr>
+                    <li><a href="{{url_for('main.vacancy')}}" {% if request.endpoint == 'main.vacancy' %}class="active_bar"{% endif %}>вакансии</a></li><br>
+                    <hr>
+                    <li><a href="{{url_for('main.cooperation')}}" {% if request.endpoint == 'main.cooperation' %}class="active_bar"{% endif %}>сотрудничество</a></li><br>
+                    <hr>
+                    <li><a href="{{url_for('main.corporate')}}" {% if request.endpoint == 'main.corporate' %}class="active_bar"{% endif %}>для оптовых клиентов и юридических лиц</a></li><br>
+                    <hr>
+                    <li><a href="{{url_for('main.certificates_and_licenses')}}" {% if request.endpoint == 'main.certificates_and_licenses' %}class="active_bar"{% endif %}>Сертификаты и лицензии</a></li><br>
+                  </ul>
+                </div>                  
+              </div>				
+            </li>
+					<li><a href="{{url_for('catalog.index')}}" {% if request.endpoint == 'catalog.index' %}class="active_bar"{% endif %}>Каталог товаров</a><i>/</i></li>
+          <li><a href="{{url_for('main.news')}}" {% if request.endpoint == 'main.news' %}class="active_bar"{% endif %}>Новости</a><i>/</i></li>
+          <li><a href="{{url_for('main.bacterio')}}" {% if request.endpoint == 'main.bacterio' %}class="active_bar"{% endif %}>Бактериофаги</a><i>/</i></li>
+          <!-- <li><a href="{{url_for('main.index')}}" {% if request.endpoint == 'main.index' %}class="active_bar"{% endif %}>Медтехника</a><i>/</i></li> -->
+					<li><a href="{{url_for('main.hw_order')}}" {% if request.endpoint == 'main.hw_order' %}class="active_bar"{% endif %}>Как заказать?</a><i>/</i></li>
+          <li><a href="{{url_for('main.delivery')}}" {% if request.endpoint == 'main.delivery' %}class="active_bar"{% endif %}>Доставка и оплата</a></li>
+          <li style="position: absolute;right: 1%;top: 98px;">
+            <div id="google_translate_element"></div>
+          </li>
+        </ul>
+        <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'ru', includedLanguages: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			</div>
+			<!-- <div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>(+996) 123 45 67 89</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">info@evrasia-pharm.kg</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div> -->
+		</div>
+  </div>
+  <!-- End Navbar -->
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+            <div class="container">
+              <div class="alert alert-{{category}} alert-dismissible alert-disappear text-center" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{message}}
+              </div>
+            </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+	
+	{% if request.endpoint != 'main.index' %}
+		{% block beadcrumb %}
+		{% endblock %}
+	{% endif %}
+
+{% endblock %}
+
+{% block content %}
+<!-- banner -->
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+			<nav class="navbar nav_bottom">
+			 <!-- Brand and toggle get grouped for better mobile display -->
+			  <div class="navbar-header nav_2">
+				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+			   </div> 
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+            {% if request.endpoint == 'main.index' %}
+              <li><a href="{{url_for('catalog.index')}}" style="background:rgb(132, 198, 57);">Все категории <i class="fa fa-arrow-right fa-fw"></i></a></li>
+              {% for category in g.category[0:8] %}
+                <li><a href="{{url_for('catalog.sluger', catalog_slug=category.slug)}}" {% if category.name == 'Медицинское оборудование' %} style="color:rgb(204, 51, 0);" {% endif %}>{{category.name|truncate(25)}}</a></li>
+              {% endfor %}
+            {% else %}
+              {% for category in g.category %}
+                <li><a href="{{url_for('catalog.sluger', catalog_slug=category.slug)}}" {% if category.name == 'Медицинское оборудование' %} style="color:rgb(204, 51, 0);" {% endif %}>{{category.name|truncate(25)}}</a></li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+				 </div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+  </div>
+  {% block page_content %}
+  {% endblock %}
+  {% include "_footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+  {{super()}}
+  <script type="text/javascript" src="{{url_for('main.js_provider', filename='move-top.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('main.js_provider', filename='easing.js')}}"></script>
+  <script defer src="{{url_for('main.js_provider', filename='jquery.flexslider.js')}}"></script>
+  <script src="{{url_for('main.js_provider', filename='waypoints.min.js')}}"></script> 
+  <script src="{{url_for('main.js_provider', filename='counterup.min.js')}}"></script> 
+  <script src="{{url_for('main.js_provider', filename='easing.js')}}"></script>
+  <script src="{{url_for('main.js_provider', filename='toastr.min.js')}}"></script>
+  <script>
+    jQuery(document).ready(function( $ ) {
+      $('.counter').counterUp({
+        delay: 10,
+        time: 1000
+      });
+    });
+  </script>
+  <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+    function hideURLbar(){ window.scrollTo(0,1); } </script>
+	{% compress 'js' %}
+		<script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+        var elements = document.getElementsByTagName("INPUT");
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+              if(e.target.validity.tooShort){
+                e.target.setCustomValidity("максимальные символы 8");
+              } else if (e.target.validity.typeMismatch) {
+                e.target.setCustomValidity('Пожалуйста, укажите «@» в адресе электронной почты');
+              } else {
+                e.target.setCustomValidity("Это поле не может быть пустым");
+              }
+              console.log(e.target.validity);
+            }
+          };
+          elements[i].oninput = function(e) {
+            e.target.setCustomValidity("");
+          };
+        }
+      });
+		</script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $(".scroll").click(function(event){		
+          event.preventDefault();
+          $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+        });
+      });
+    </script>
+    <script type="text/javascript">
+    $(window).load(function(){
+      $('.flexslider').flexslider({
+      animation: "slide",
+      start: function(slider){
+        $('body').removeClass('loading');
+      }
+      });
+    });
+    </script>
+    <!-- <script>
+      $(document).ready(function() {
+        var navoffeset=$(".agileits_header").offset().top;
+        $(window).scroll(function(){
+          var scrollpos=$(window).scrollTop(); 
+          if(scrollpos >=navoffeset){
+            $(".agileits_header").addClass("fixed");
+          }else{
+            $(".agileits_header").removeClass("fixed");
+          }
+        });
+        
+      });
+    </script> -->
+    <script>
+      $(document).ready(function(){
+        $(".dropdown").hover(            
+          function() {
+              $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+              $(this).toggleClass('open');        
+          },
+          function() {
+              $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+              $(this).toggleClass('open');       
+          }
+        );
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        /*
+          var defaults = {
+          containerID: 'toTop', // fading element id
+          containerHoverID: 'toTopHover', // fading element hover id
+          scrollSpeed: 1200,
+          easingType: 'linear' 
+          };
+        */
+                  
+        $().UItoTop({ easingType: 'easeOutQuart' });
+                  
+        });
+    </script>
+  {% endcompress %}
+  {{ moment.include_moment() }}
+	{{ moment.lang('ru') }}
+
+	{% block tail_js %}
+	{% endblock %}
+
+	{% endblock %}

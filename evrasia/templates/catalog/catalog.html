@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Каталог товаров {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+	<div class="banner">
+		<div class="w3l_banner_nav_right">
+			<!-- <div class="w3l_banner_nav_right_banner3">
+				<h3>КАТАЛОГ ТОВАРОВ<span class="blink_me"></span></h3>
+			</div> -->
+			<div class="w3ls_w3l_banner_nav_right_grid">
+				<div class="w3ls_w3l_banner_nav_right_grid1">
+					{% if not products.count() %}
+						<div class="alert alert-danger text-center" role="alert">
+							Пока нету товаров в этом разделе
+						</div>
+					{% endif %}
+					{% for product in products %}
+						<div class="col-md-3 w3ls_w3l_banner_left">
+							<div class="hover14 column">
+								<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+									<!-- <div class="agile_top_brand_left_grid_pos">
+										<img src="/static/images/offer.png" alt=" " class="img-responsive">
+									</div> -->
+									<div class="agile_top_brand_left_grid1">
+										<figure>
+											<div class="snipcart-item block">
+												<div class="snipcart-thumb">
+													<a href="{{url_for('products.description', product_slug=product.slug)}}"><img src="{{product.image}}" alt="{{product.title}}" class="product_img"></a>
+													<p>{{product.title|truncate(20)}}</p>
+													<h4>{{"%.2f сом"|format(product.price)}}</h4>
+												</div>
+												<div class="snipcart-details">
+													{% if product.public_id not in g.shopping_cart %}
+														<a href="#javascript:void(0);" class="add_to_cart" data-product="{{ product.public_id }}">
+															<i class="fa fa-shopping-cart fa-fw"></i> В корзину
+														</a>
+													{% else %}
+														<a href="javascript:void(0);" class="add_to_cart" style="background:rgb(251, 59, 59);">
+															<i class="fa fa-shopping-cart fa-fw"></i> Уже в корзине
+														</a>
+													{% endif %}
+												</div>
+											</div>
+										</figure>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+{% endblock %}
+
+{% block tail_js %}
+
+	{% compress 'js' %}
+
+		<script type="text/javascript">
+		
+			$('.add_to_cart').on('click', function(event){
+				event.preventDefault();
+				var productId = $(this).data('product');
+				var csrf_token = '{{csrf_token()}}';
+				
+				$('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+				setTimeout(function(){
+					$.ajax({
+						type: 'post',
+						cache: false,
+						url: "/products/add_to_cart/"+productId,
+						data: {
+							product: productId
+						},
+						beforeSend: function(xhr, settings) {
+							if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+								xhr.setRequestHeader("X-CSRFToken", csrf_token);
+							}
+						},
+						complete: function(){
+							$('.loading').html('<div class="spinner" style="display:none;"></div>');
+						},
+						success: function(data){
+							$('body').load('{{request.url}}');
+							alert(data.cart);
+						}
+					});
+				}, 1000);
+			});
+
+		</script>
+	{% endcompress %}
+
+{% endblock %}

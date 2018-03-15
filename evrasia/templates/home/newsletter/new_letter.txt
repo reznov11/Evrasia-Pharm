@@ -1,0 +1,9 @@
+У вас новое письмо от {{ fullname }}.
+
+Телефон: {{ telephone }}
+E-mail: {{ email }}
+Тема: {{ title }}
+
+Сообщение:
+
+{{ message }}

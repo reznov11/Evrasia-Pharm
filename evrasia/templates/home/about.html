@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - О нас {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="w3l_banner_nav_right">
+        <div class="privacy about">
+            <h3>О нас</h3>
+            <p class="animi">
+                ОСОО "Evrasia-pharm" – является фармацевтической, оптовой  дистрибьюторской компанией, которая занимается поставкой медицинского оборудования, изделий медицинского назначения, расходных материалов и лекарственных препаратов  с целью  обеспечения медицинских  и фармацевтических учреждений кыргызстана. <br><br>
+
+                Компания была создана в 1999 году и на сегодняшний день благотворно и успешно развивается.<br><br>
+
+                Основной принцип нашей работы – развитие честного и взаимовыгодного сотрудничества.<br><br>
+
+                Целью компании является устойчивый рост, развитие на фармацевтическом рынке и активное участие в деле обеспечения населения кыргызстана качественными лекарственными средствами и изделиями медицинского назначения.<br><br>
+
+                <strong>компания evrasia-pharm включает в себя:</strong> <br>
+                    1 - оптовый склад изделий медицинского назначения и медицинского оборудования;
+                    <br>
+                    2 - оптовый склад лекарственных средств;
+                    <br>
+                    3 - розничную аптечную сеть, состоящую из 12 аптечных учреждений.
+                <br><br>
+
+                Специалисты компании  проводят весь спектр мероприятий по созданию благоприятного сотрудничества с клиентами и коллегами  со всех регионов кыргызстана.
+            </p>
+            <div class="agile_about_grids">
+                <div class="col-md-6 agile_about_grid_right">
+                    <img src="https://ebeamservices.com/wp-content/uploads/2015/01/sterlization-technology.jpg" alt=" " class="img-responsive">
+                </div>
+                <div class="col-md-6 agile_about_grid_left">
+                    <h2>Наши ценности:</h2>
+                    <br>
+                    <ol>
+                        <li><strong>Доверие</strong>: мы выстраиваем доверительные отношения с нашими Покупателями для наиболее эффективной работы;</li>
+                        <li><strong>Забота</strong>: именно забота о Вашем здоровье является движущей силой нашей работы;</li>
+                        <li><strong>Инновации</strong>: мы постоянно ведём работу по внедрению новых технологий, благодаря которым процесс покупки был для Вас удобным, быстрым и приятным;</li>
+                        <li><strong>Партнёрство</strong>: сотрудничество с ведущими компаниями мира позволяет нам предлагать Покупателям только лучшие товары;</li>
+                        <li><strong>Преданность</strong>: мы дорожим каждым Покупателем.</li>
+                    </ol>
+                </div>
+                <!-- <div class="clearfix"> </div> -->
+            </div>
+        </div>
+    <!-- //about -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="testimonials">
+        <div class="container">
+            <h3>Отзыв</h3>
+                <div class="w3_testimonials_grids">
+                    <div class="wmuSlider example1 animated wow slideInUp" data-wow-delay=".5s" style="height: 259px;">
+                        <div class="wmuSliderWrapper">
+                            <article style="position: absolute; width: 100%; opacity: 0;"> 
+                                <div class="banner-wrap">
+                                    <div class="col-md-6 w3_testimonials_grid">
+                                        <p><i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            Хочу выразить слова благодарности, консультанту оптики "Evrasia-Pharm".
+                                        </p>
+                                        <h4>Алыкул Джунусов <span>Customer</span></h4>
+                                    </div>
+                                    <div class="col-md-6 w3_testimonials_grid">
+                                        <p><i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            Отлтчный сервис, приемлеммые цены, и самое главное что доставка была осуществлена вовремя.
+                                        </p>
+                                        <h4>Мелись Мамбетокунов <span>Customer</span></h4>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </article>
+                            <article style="position: absolute; width: 100%; opacity: 0;"> 
+                                <div class="banner-wrap">
+                                    <div class="col-md-6 w3_testimonials_grid">
+                                        <p><i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            Очень хорошая фирма! Блогадарна всем сотрудникам за внимательное отнощение ко мне и моему ребёнку! Желаю вам дальнейшего процветания! </p>
+                                        <h4>Аида Фармонова <span>Customer</span></h4>
+                                    </div>
+                                    <div class="col-md-6 w3_testimonials_grid">
+                                        <p><i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            Хочу выразить слова благодарности, консультанту оптики "Evrasia-Pharm".
+                                        </p>
+                                        <h4>Нургул Бердиева <span>Customer</span></h4>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </article>
+                        </div>
+                    <ul class="wmuSliderPagination"><li><a href="#" class="wmuActive">0</a></li><li><a href="#" class="">1</a></li></ul></div>
+                </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tail_js %}
+    <script src="{{url_for('main.js_provider', filename='jquery.wmuSlider.js')}}"></script> 
+    <script>
+        $('.example1').wmuSlider();         
+    </script>
+{% endblock %}

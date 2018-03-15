@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block title %} {{product.title}} - {{config.APP_NAME}} {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <style type="text/css">
+        .morecontent span {
+            display: none;
+        }
+        .morelink {
+            display: block;
+        }
+    </style>
+    <div class="banner">
+        <div class="w3l_banner_nav_right">
+            <div class="agileinfo_single">
+                <h5 class="page-header">{{product.title}}</h5>
+                <div class="col-md-4 agileinfo_single_left">
+                    <img id="example" src="{{product.image}}" alt=" " class="img-responsive">
+                </div>
+                <div class="col-md-8 agileinfo_single_right">
+                    <div class="w3agile_description">
+                        <h4>Описание :</h4>
+                        <p class="more">
+                            {{product.descr}}
+                        </p>
+                        <hr>
+                        <div class="rating">
+                            <x-star-rating id="rate_stars" value="{% if product.rates.count() %}{{product.rating(average.count())}}{% else %}0.0{% endif %}" number="10" data-rate="{{product.public_id}}" data-type="product"></x-star-rating>
+                        </div>
+                        <div class="vote-result" id="wait_vote_50100">
+                            <span class="r1">Рейтинг: <span id="r1">{% if product.rates.count() %}{{product.rating(average.count())}}{% else %}0.0{% endif %}</span></span>, Голосов: <span id="r2"> {{product.rates.count()}} </span></div>
+                        </div>
+                        <div class="snipcart-item block">
+                            <div class="snipcart-thumb agileinfo_single_right_snipcart">
+                                <h4>{{"%.2f сом"|format(product.price)}}</h4>
+                            </div>
+                            <div class="snipcart-details agileinfo_single_right_details">
+                                {% if product.public_id not in g.shopping_cart %}
+                                    <a href="#javascript:void(0);" class="add_to_cart" id="ToCart" data-product="{{ product.public_id }}">
+                                        <i class="fa fa-shopping-cart fa-fw"></i> В корзину
+                                    </a>
+                                {% else %}
+                                    <a href="javascript:void(0);" class="add_to_cart" style="background:rgb(251, 59, 59);">
+                                        <i class="fa fa-shopping-cart fa-fw"></i> Уже в корзине
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+                <div class="" id="logout">
+                    <div class="comment-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active" id="comments_pan"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Комментарии</h4></a></li>
+                            {% if current_user.is_authenticated %}
+                                <li id="add_comment_pan"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Оставь</h4></a></li>
+                            {% endif %}
+                        </ul>            
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="comments-logout">                
+                                <ul class="media-list" id="comments_list">
+                                    {% if not comments.count() %}
+                                        <p style="color:#c30;">Нет комментариев.</p>
+                                    {% endif %}
+                                    {% for comment in comments %}
+                                        <li class="media">
+                                            <a class="pull-left" href="#">
+                                            <img class="media-object img-circle" style="background: url('{{comment.user.image}}');    background-repeat: no-repeat;
+                                            background-size: cover;
+                                            width: 50px;
+                                            height: 50px;">
+                                            </a>
+                                            <div class="media-body">
+                                                <div class="well well-lg">
+                                                    <h4 class="media-heading text-uppercase reviews">{{comment.user.username}} </h4>
+                                                    <ul class="media-date text-uppercase reviews list-inline">
+                                                        <li class="dd">{{moment(comment.date).format('DD')}}</li>
+                                                        <li class="mm">{{moment(comment.date).format('MM')}}</li>
+                                                        <li class="aaaa">{{moment(comment.date).format('YYYY')}}</li>
+                                                    </ul>
+                                                    <p class="media-comment">
+                                                        {{comment.text}}
+                                                    </p>
+                                                </div>              
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul> 
+                            </div>
+                            {% if current_user.is_authenticated %}
+                                <div class="tab-pane" id="add-comment">
+                                    <form class="form-horizontal" id="commentForm" role="form"> 
+                                        <div class="form-group">
+                                            <label for="addComment" class="col-sm-2 control-label">Комментария</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">                    
+                                                <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Добавь</button>
+                                            </div>
+                                        </div>            
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+{% endblock %}
+
+{% block tail_js %}
+    <script src="{{url_for('main.js_provider', filename='okzoom.js')}}"></script>
+    {% compress 'js' %}
+        <script>
+            $(function(){
+                $('#example').okzoom({
+                    width: 150,
+                    height: 150,
+                    border: "1px solid black",
+                    shadow: "0 0 5px #000"
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            function htmlEncode(value){
+                if (value) {
+                    return jQuery('<div />').text(value).html();
+                } else {
+                    return '';
+                }
+            }
+            $('form').submit(function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                var csrf_token = "{{csrf_token()}}";
+                $.ajax({
+                    cache: false,
+                    type: 'post',
+                    url: '{{url_for("products.add_comment")}}',
+                    data: {
+                        comment: $('#addComment').val(),
+                        productId: "{{ product.public_id }}"
+                    },
+                    beforeSend: function(xhr, settings) {
+                        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+                    },
+                    success: function(data){
+                        if (data.success){
+                            $('#comments_list').prepend('\
+                                <li class="media">\
+                                    <a class="pull-left" href="#">\
+                                    <img class="media-object img-circle" src="{{current_user.image}}" alt="profile">\
+                                    </a>\
+                                    <div class="media-body">\
+                                        <div class="well well-lg">\
+                                            <h4 class="media-heading text-uppercase reviews">{{current_user.username}} </h4>\
+                                            <ul class="media-date text-uppercase reviews list-inline">\
+                                                <li class="dd">'+moment().format("DD")+'</li>\
+                                                <li class="mm">'+moment().format("MM")+'</li>\
+                                                <li class="aaaa">'+moment().format("YYYY")+'</li>\
+                                            </ul>\
+                                            <p class="media-comment">\
+                                                '+htmlEncode( $('#addComment').val() )+'\
+                                            </p>\
+                                        </div>\
+                                    </div>\
+                                </li>\
+                            ');
+                            $('#addComment').val('');
+                            $('body').load('{{request.url}}');
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+            });
+
+        </script>
+        <script type="text/javascript">
+        
+            $('#ToCart').on('click', function(event){
+                event.preventDefault();
+                var productId = $(this).data('product');
+                var csrf_token = '{{csrf_token()}}';
+                
+                $('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+                setTimeout(function(){
+                    $.ajax({
+                        type: 'post',
+                        cache: false,
+                        url: "/products/add_to_cart/"+productId,
+                        data: {
+                            product: productId
+                        },
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        },
+                        complete: function(){
+                            $('.loading').html('<div class="spinner" style="display:none;"></div>');
+                        },
+                        success: function(data){
+                            $('body').load('{{request.url}}');
+                            alert(data.cart);
+                        }
+                    });
+                }, 1000);
+            });
+
+        </script>
+    {% endcompress %}
+	<script>
+		class StarRating extends HTMLElement {
+			get value () {
+				return this.getAttribute('value') || 0;
+			}
+
+			set value (val) {
+				this.setAttribute('value', val);
+				this.highlight(this.value - 1);
+			}
+
+			get number () {
+				return this.getAttribute('number') || 5;
+			}
+
+			set number (val) {
+				this.setAttribute('number', val);
+
+				this.stars = [];
+
+				while (this.firstChild) {
+					this.removeChild(this.firstChild);
+				}
+
+				for (let i = 0; i < this.number; i++) {
+					let s = document.createElement('div');
+					s.className = 'star';
+					this.appendChild(s);
+					this.stars.push(s);
+				}
+
+				this.value = this.value;
+			}
+
+			highlight (index) {
+				this.stars.forEach((star, i) => {
+					star.classList.toggle('full', i <= index);
+				});
+			}
+
+			constructor () {
+				super();
+
+				var dataElement = document.getElementById('rate_stars');
+				this.number = this.number;
+
+				this.addEventListener('mousemove', e => {
+					let box = this.getBoundingClientRect(),
+						starIndex = Math.floor((e.pageX - box.left) / box.width * this.stars.length);
+
+					this.highlight(starIndex);
+				});
+
+				this.addEventListener('mouseout', () => {
+					this.value = this.value;
+				});
+
+				{% if current_user.is_authenticated %}
+					{% if not product.voted(current_user.id) %}
+						this.addEventListener('click', e => {
+							let box = this.getBoundingClientRect(),
+								starIndex = Math.floor((e.pageX - box.left) / box.width * this.stars.length);
+
+							this.value = starIndex + 1;
+
+							let rateEvent = new Event('rate');
+							this.dispatchEvent(rateEvent);
+
+							var newXHR = new XMLHttpRequest();
+
+							if(dataElement.getAttribute('data-type') == 'product'){
+								var jsonData = { productId: "{{product.public_id}}", rate_star: this.value };
+
+								var formattedJsonData = JSON.stringify( jsonData  );
+                                
+                                newXHR.open( 'POST', '/products/rate' );
+
+								newXHR.setRequestHeader("Content-type", "application/json");
+
+                                newXHR.setRequestHeader("X-CSRFToken", '{{csrf_token()}}');
+
+                                newXHR.send( formattedJsonData );
+
+								$('body').load('{{request.url}}');
+							} else {
+                                return false;
+                            }
+						});
+					{% endif %}
+				{% else %}
+					this.addEventListener('click', e => {
+						alert('Вам необходимо авторизоваться через сайт');
+					});
+				{% endif %}
+			}
+		}
+
+		customElements.define('x-star-rating', StarRating);
+	</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Configure/customize these variables.
+            var showChar = 300;  // How many characters are shown by default
+            var ellipsestext = " ...";
+            var moretext = "Прочитайте больше &#8595;";
+            var lesstext = "Свернуть &#8593;";
+            
+
+            $('.more').each(function() {
+                var content = $(this).html();
+         
+                if(content.length > showChar) {
+         
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar, content.length - showChar);
+         
+                    var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+         
+                    $(this).html(html);
+                }
+         
+            });
+         
+            $(".morelink").click(function(){
+                if($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

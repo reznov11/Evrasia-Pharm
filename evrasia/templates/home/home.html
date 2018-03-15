@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME|capitalize}} - Pharm {% endblock %}
+
+{% block page_content %}
+
+	<div class="w3l_banner_nav_right">
+		<section class="slider">
+			<div class="flexslider">
+				<ul class="slides">
+					<li>
+						<div class="w3l_banner_nav_right_banner">
+							<h3>Бесплатная доставка <span>при онлайн</span> заказе</h3>
+							<div class="more">
+								<a href="{{ url_for('catalog.index') }}" class="button--saqui button--round-l button--text-thick" data-text="Купите сейчас">Купите сейчас</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="w3l_banner_nav_right_banner1">
+							<h3>Новинки <span>товары</span> каждый день</h3>
+							<div class="more">
+								<a href="{{ url_for('catalog.index') }}" class="button--saqui button--round-l button--text-thick" data-text="Купите сейчас">Купите сейчас</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="w3l_banner_nav_right_banner2">
+							<h3>получи свою <i>5%</i> скидку</h3>
+							<div class="more">
+								<a href="{{ url_for('catalog.index') }}" class="button--saqui button--round-l button--text-thick" data-text="Купите сейчас">Купите сейчас</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+	</div>
+	
+	<div class="clearfix"></div>
+
+    <!-- top-brands -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Новинки</h3>
+			<div class="agile_top_brands_grids">
+				{% for product in products %}
+					<div class="col-md-3 top_brand_left">
+						<div class="hover14 column">
+							<div class="agile_top_brand_left_grid">
+								<div class="agile_top_brand_left_grid1">
+									<figure>
+										<div class="snipcart-item block" >
+											<div class="snipcart-thumb">
+												<a href="{{url_for('products.description', product_slug=product.slug)}}">
+													<img title="{{product.title}}" alt="{{product.title}}" src="{{product.image}}" class="product_img" />
+												</a>		
+												<p>{{product.title|truncate(22)}}</p>
+												<h4>{{"%.2f сом"|format(product.price)}}</h4>
+											</div>
+											<div class="snipcart-details top_brand_home_details">
+												{% if product.public_id not in g.shopping_cart %}
+													<a href="javascript:void(0);" class="add_to_cart" data-product="{{ product.public_id }}">
+														<i class="fa fa-shopping-cart fa-fw"></i> В корзину
+													</a>
+												{% else %}
+													<a href="javascript:void(0);" class="add_to_cart" style="background:rgb(251, 59, 59);">
+														<i class="fa fa-shopping-cart fa-fw"></i> Уже в корзине
+													</a>
+												{% endif %}
+											</div>
+										</div>
+									</figure>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% if loop.index == 4 %}
+						<div class="clearfix"></div>
+					{% endif %}
+				{% endfor %}
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+
+    <!-- banner -->
+	<div class="banner_bottom">
+        <div class="wthree_banner_bottom_left_grid_sub1" style="width: 94%;">
+            <div class="col-md-4 wthree_banner_bottom_left">
+                <div class="wthree_banner_bottom_left_grid" style="background:linear-gradient(to top, rgba(0, 0, 0, 0.25);">
+                    <img src="/static/images/banners/Pills_NOAC_Pradaxa_Dabigatran_DT.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_bottom_left_grid_pos">
+                        <h4>Скидка до <span>5%</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 wthree_banner_bottom_left">
+                <div class="wthree_banner_bottom_left_grid">
+                    <img src="/static/images/banners/dreamstime_xl_27267207.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_btm_pos">
+                        <h3>Lorem <span>dolor amit</span> solit <i>Evrasia-Pharm</i></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 wthree_banner_bottom_left">
+                <div class="wthree_banner_bottom_left_grid">
+                    <img src="/static/images/banners/ThinkstockPhotos-480939060.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_btm_pos1">
+                        <h3>Топ <span>бренды</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+	</div>
+
+<div class="services-bottom">
+		<div class="container">
+			<div class="col-md-3 about_counter_left">
+				<i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+				<p class="counter">89,147</p> 
+				<h3>Followers</h3>
+			</div>
+			<div class="col-md-3 about_counter_left">
+				<i class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></i>
+				<p class="counter">54,598</p> 
+				<h3>Savings</h3>
+			</div>
+			<div class="col-md-3 about_counter_left">
+				<i class="glyphicon glyphicon-export" aria-hidden="true"></i>
+				<p class="counter">83,983</p> 
+				<h3>Support</h3>
+			</div>
+			<div class="col-md-3 about_counter_left">
+				<i class="glyphicon glyphicon-bullhorn" aria-hidden="true"></i>
+				<p class="counter">45,894</p> 
+				<h3>Popularity</h3>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+	<div class="newsletter-top-serv-btm">
+		<div class="container">
+			<div class="col-md-4 wthree_news_top_serv_btm_grid">
+				<div class="wthree_news_top_serv_btm_grid_icon">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+				</div>
+				<h3>Nam libero tempore</h3>
+				<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus 
+					saepe eveniet ut et voluptates repudiandae sint et.</p>
+			</div>
+			<div class="col-md-4 wthree_news_top_serv_btm_grid">
+				<div class="wthree_news_top_serv_btm_grid_icon">
+					<i class="fa fa-bar-chart" aria-hidden="true"></i>
+				</div>
+				<h3>officiis debitis aut rerum</h3>
+				<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus 
+					saepe eveniet ut et voluptates repudiandae sint et.</p>
+			</div>
+			<div class="col-md-4 wthree_news_top_serv_btm_grid">
+				<div class="wthree_news_top_serv_btm_grid_icon">
+					<i class="fa fa-truck" aria-hidden="true"></i>
+				</div>
+				<h3>eveniet ut et voluptates</h3>
+				<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus 
+					saepe eveniet ut et voluptates repudiandae sint et.</p>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block tail_js %}
+	{% compress 'js' %}
+
+		<script type="text/javascript">
+		
+			$('.add_to_cart').on('click', function(event){
+				event.preventDefault();
+				var productId = $(this).data('product');
+				var csrf_token = '{{csrf_token()}}';
+				
+				$('.loading').html('<div class="spinner"> <img id="ld_spinner" src="/static/images/icons/loader.gif" alt="spinner"/></div>');
+				setTimeout(function(){
+					$.ajax({
+						type: 'post',
+						cache: false,
+						url: "/products/add_to_cart/"+productId,
+						data: {
+							product: productId
+						},
+						beforeSend: function(xhr, settings) {
+							if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+								xhr.setRequestHeader("X-CSRFToken", csrf_token);
+							}
+						},
+						complete: function(){
+							$('.loading').html('<div class="spinner" style="display:none;"></div>');
+						},
+						success: function(data){
+							$('body').load('{{request.url}}');
+							alert(data.cart);
+						}
+					});
+				}, 1000);
+			});
+
+		</script>
+	{% endcompress %}
+{% endblock %}

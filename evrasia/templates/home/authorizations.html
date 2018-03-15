@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME|capitalize}} - Авторизация {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="banner">
+        <div class="w3l_banner_nav_right">
+            <div class="clearfix"></div>
+            <div class="w3_login">
+                <h3>Вход на сайте</h3>
+                <div class="w3_login_module">
+                    <div class="module form-module">
+                        <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                            <div class="tooltip">Регистрация</div>
+                        </div>
+                        <div class="form">
+                            <h2>Авторизация</h2>
+                            <form action="{{url_for('auth.login')}}" method="post">
+                                {{g.login.hidden_tag('csrf_token')}}
+                                <input type="hidden" name="next" value="{{request.args.get("next")}}">
+                                {% if g.login.telephone.errors or g.login.password.errors %}
+                                    {% for e in g.login.telephone.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                    {% for e in g.login.password.errors %}
+                                        <p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                {{g.login.telephone(placeholder="Номер телефона", maxlength="12", required="required")}}
+                                {{g.login.password(placeholder="Пароль", required="required")}}
+                                {{g.login.remember_me()}} {{g.login.remember_me.label}}
+                                <br><br>
+                                {{g.login.submit()}}
+                            </form>
+                        </div>
+                        <div class="cta"><a href="#">Забыл пароль?</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+{% endblock %}
+
+{% block tail_js %}
+    <script>
+        $('.toggle').click(function(){
+            window.location = '{{url_for("auth.registration")}}';
+            // // Switches the Icon
+            // $(this).children('i').toggleClass('fa-pencil');
+            // // Switches the forms  
+            // $('.form').animate({
+            // height: "toggle",
+            // 'padding-top': 'toggle',
+            // 'padding-bottom': 'toggle',
+            // opacity: "toggle"
+            // }, "slow");
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Команда {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="w3l_banner_nav_right">
+        <div class="team">
+            <h3>Наша команда</h3>
+            <div class="agileits_team_grids">
+                <div class="col-md-4 agileits_team_grid">
+                    <img class="img-responsive" style="background: url('/static/images/team/1.jpg');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 260px;
+                    background-position: -50px;">
+                    <h4>Гульмира Толубаева</h4>
+                    <!-- <p>Manager</p> -->
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="javascript:void(0);" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 agileits_team_grid">
+                    <img class="img-responsive" style="background: url('/static/images/team/2.jpg');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 260px;
+                    background-position: -50px;">
+                    <h4>Венера Мусабекова</h4>
+                    <!-- <p>Supervisor</p> -->
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="javascript:void(0);" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 agileits_team_grid">
+                    <img class="img-responsive" style="background: url('/static/images/team/3.jpg');width: 200px;
+                    height: 220px;
+                    background-repeat: no-repeat;
+                    background-size: 380px;
+                    background-position: -50px;">
+                    <h4>Марина Мусаева</h4>
+                    <!-- <p>Supervisor</p> -->
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="javascript:void(0);" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript:void(0);" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

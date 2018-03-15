@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Новости {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="banner">
+    <div class="w3l_banner_nav_right">
+    <!-- events -->
+        <div class="events">
+            <h3>Новости</h3>
+            <div class="events-bottom">
+                {% for _ in news %}
+                    <div class="col-md-6 events_bottom_left">
+                        <div class="col-md-4 events_bottom_left1">
+                            <div class="events_bottom_left1_grid">
+                                <h4>{{ moment( _.published ).format('DD') }}</h4>
+                                <p>{{ moment( _.published ).format('MMM') }}, {{ moment( _.published ).format('YYYY') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-8 events_bottom_left2">	
+                            <img src="{{ _.image }}" alt="{{ _.title }}" style="width:319px;height:212px;" class="img-responsive">
+                            <h4>
+                                <a href="" style="color:rgb(204, 50, 43);">
+                                    {{ _.title|truncate(25) }}
+                                </a>
+                            </h4>
+                            <ul>
+                                <li><i class="fa fa-clock-o" aria-hidden="true"></i>{{ moment( _.published ).format('hh:mm A') }}</li>
+                                <li><i class="fa fa-user" aria-hidden="true"></i><a href="#">Админ</a></li>
+                            </ul>
+                            <p>
+                                {{ _.body|truncate(150) }}
+                                <a href="" class="pull-right" style="color:rgb(204, 50, 43);">подробнее</a>
+                            </p>
+                            
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+<!-- //events -->
+    </div>
+    <div class="clearfix"></div>
+</div>
+{% endblock %}

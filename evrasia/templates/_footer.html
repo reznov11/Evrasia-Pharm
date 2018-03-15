@@ -1,0 +1,97 @@
+<!-- newsletter -->
+{% if not request.endpoint == 'products.submit_order' and request.endpoint.split('.')[0] != 'profile' and request.endpoint != 'main.contact' and request.endpoint.split('.')[0] != 'auth' %}
+	<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>Подпишитесь на нашу рассылку</h3>
+			</div>
+			<div class="w3agile_newsletter_right" id="subscribe">
+				<form action="{{url_for('main.subscribe')}}" method="post">
+					{{g.subscriber.hidden_tag()}}
+					{{g.subscriber.email(onfocus="this.value = '';", onblur="if (this.value == '') {this.value = 'Email';}", required="")}}
+					{% if g.subscriber.email.errors %}
+						{% for e in g.subscriber.email.errors %}
+							<p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+						{% endfor %}
+					{% endif %}
+					{{g.subscriber.submit()}}
+					<br><br>
+					{{g.subscriber.recaptcha()}}
+					{% if g.subscriber.recaptcha.errors %}
+						{% for e in g.subscriber.recaptcha.errors %}
+							<p class="form-error" style="color:rgb(204, 50, 43);">{{e}}</p>
+						{% endfor %}
+					{% endif %}
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+{% endif %}
+<!-- //newsletter -->
+<!-- footer -->
+<div class="footer">
+	<div class="container">
+		<div class="col-md-3 w3_footer_grid">
+			<h3>Информация</h3>
+			<ul class="w3_footer_grid_list">
+				<li><a href="{{url_for('main.delivery')}}">Доставка и оплата</a></li>
+				<li><a href="{{url_for('main.hw_order')}}"> Как заказать?</a></li>
+				<li><a href="{{url_for('main.about')}}">о нас</a></li>
+				<li><a href="{{url_for('main.vacancy')}}">вакансии</a></li>
+				<li><a href="{{url_for('main.cooperation')}}">сотрудничество</a></li>
+				<li><a href="{{url_for('main.corporate')}}">для оптовых клиентов и юридических лиц</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 w3_footer_grid">
+			<h3>Полезные ССылки</h3>
+			<ul class="w3_footer_grid_list">
+				<li><a href="{{url_for('catalog.index')}}">Каталог товаров</a></li>
+				<li><a href="{{url_for('main.news')}}">Новости</a></li>
+				<li><a href="{{url_for('main.bacterio')}}">Бактериофаги</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 w3_footer_grid">
+			<h3>Что в магазине</h3>
+			<ul class="w3_footer_grid_list">
+              {% for category in g.category[0:6] %}
+                <li><a href="{{url_for('catalog.sluger', catalog_slug=category.slug)}}">{{category.name|truncate(25)}}</a></li>
+              {% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-3 w3_footer_grid">
+			<h3>twitter posts</h3>
+			<ul class="w3_footer_grid_list1">
+				<li><label class="fa fa-twitter" aria-hidden="true"></label><i>{{moment(g.first_user_twitt).fromNow()}}</i><span><a href="#">@nurbek0731</a>
+					Наканец-то в Кыргызстане появилась нормальная фарм компания</span></li>
+				<li><label class="fa fa-twitter" aria-hidden="true"></label><i>{{moment(g.second_user_twitt).fromNow()}}</i><span><a href="#">@saberaheart69</a>
+					Не плохая компания с широким ассортиментом, часта нахожу там то, что в других невозможно отыскать</li>
+			</ul>
+		</div>
+		<div class="clearfix"> </div>
+		<div class="agile_footer_grids">
+			<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+				<div class="w3_footer_grid_bottom">
+					<h4>100% Безопасные платежи</h4>
+					<img src="/static/images/visamastercard.png" style="width:215px;" alt="payments method" class="img-responsive" />
+				</div>
+			</div>
+			<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+				<div class="w3_footer_grid_bottom">
+					<h5>Мы в сотсетях</h5>
+					<ul class="agileits_social_icons">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="wthree_footer_copy">
+			<p>© {{moment().format('YYYY')}} Evrasia-Pharm. Все права защищены | <a href="{{url_for('main.index')}}">Evrasia Pharm</a></p>
+		</div>
+	</div>
+</div>
+<!-- //footer -->

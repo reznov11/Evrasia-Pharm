@@ -1,0 +1,59 @@
+<!-- products-breadcrumb -->
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{url_for('main.index')}}">Главная</a><span>|</span></li>
+                {% if request.endpoint == 'products.description' %}
+                    <li><a href="{{url_for('catalog.sluger', catalog_slug=product.category.slug)}}">{{product.category.name}}</a><span>|</span></li>
+                {% endif %}
+                {% if request.endpoint == 'catalog.sluger' %}
+                    <li><a href="{{url_for('catalog.index')}}">Каталог</a><span>|</span></li>
+                {% endif %}
+                {% if request.endpoint == 'products.submit_order' %}
+                    <li><a href="{{url_for('products.shopping_cart')}}">Корзина</a><span>|</span></li>
+                {% endif %}
+                <li>
+                    {% if request.endpoint == 'main.about' %}
+                        О нас
+                    {% elif request.endpoint == 'main.team' %}
+                        Команда
+                    {% elif request.endpoint == 'main.vacancy' %}
+                        Вакансии
+                    {% elif request.endpoint == 'auth.login' %}
+                        Авторизация
+                    {% elif request.endpoint == 'main.cooperation' %}
+                        Сотрудничество
+                    {% elif request.endpoint == 'main.corporate' %}
+                        Для оптовых клиентов и юридических лиц
+                    {% elif request.endpoint == 'main.news' %}
+                        Новости
+                    {% elif request.endpoint == 'main.bacterio' %}
+                        Бактериофаги
+                    {% elif request.endpoint == 'main.hw_order' %}
+                        Как заказать?
+                    {% elif request.endpoint == 'main.delivery' %}
+                        Доставка и оплата
+                    {% elif request.endpoint == 'main.contact' %}
+                        Контакты
+                    {% elif request.endpoint == 'main.certificates_and_licenses' %}
+                        Сертификаты и лицензии
+                    {% elif request.endpoint == 'auth.login' %}
+                        Авторизация
+                    {% elif request.endpoint == 'auth.registration' %}
+                        Регистрация
+                    {% elif request.endpoint == 'catalog.index' %}
+                        Каталог
+                    {% elif request.endpoint == 'catalog.sluger' %}
+                        {{title_catalog}}
+                    {% elif request.endpoint == 'products.description' %}
+                        {{product.title}}
+                    {% elif request.endpoint == 'products.shopping_cart' %}
+                        Карзина
+                    {% elif request.endpoint == 'products.submit_order' %}
+                        Подтвердить заказ
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+<!-- //products-breadcrumb -->

@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block title %} {{config.APP_NAME}} - Как сделать заказ? {% endblock %}
+
+{% block beadcrumb %}
+    {% include "snippets/breadcrumb.html" %}
+{% endblock %}
+
+<style type="text/css">
+    h6:hover {
+        cursor:pointer!important;
+    }
+    .panel-heading {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;    
+    }
+
+    .side-tab:hover {
+        cursor: pointer;
+    }
+    .panel.panel-default {
+        border: none;
+        box-shadow: none !important;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        
+    }
+    .panel-heading {
+        border: none;
+        background-color: #eee;
+
+    }
+    .panel-body {
+        background-color: #f5f5f5;
+    }
+    .panel-title {
+        font-weight: 400;
+        color: white;
+    }
+
+    .md-macbook-pro {
+    display: block;
+    width: 55.3125em;
+    height: 31.875em;
+    font-size: 13px;
+    margin: 0 auto;
+    }
+
+    .md-macbook-pro .md-lid {
+    width: 45em;
+    height: 30.625em;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 1.875em;
+    border: solid 0.1875em #cdced1;
+    background: #131313;
+    }
+    .md-macbook-pro .md-camera {
+    width: 0.375em;
+    height: 0.375em;
+    margin: 0 auto;
+    position: relative;
+    top: 1.0625em;
+    background: #000;
+    border-radius: 100%;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+    }
+    .md-macbook-pro .md-camera:after {
+    content: "";
+    display: block;
+    width: 0.125em;
+    height: 0.125em;
+    position: absolute;
+    left: 0.125em;
+    top: 0.0625em;
+    background: #353542;
+    border-radius: 100%;
+    }
+    .md-macbook-pro .md-screen {
+    width: 42.25em;
+    height: 26.375em;
+    margin: 0 auto;
+    position: relative;
+    top: 2.0625em;
+    background: #1d1d1d;
+    background: #fff;
+    overflow: hidden;
+    }
+    .md-macbook-pro .md-screen img {
+    width: 100%;
+    }
+    .md-macbook-pro .md-base {
+    width: 100%;
+    height: 0.9375em;
+    position: relative;
+    top: -0.75em;
+    background: #c6c7ca;
+    }
+    .md-macbook-pro .md-base:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0.5em;
+    margin: 0 auto;
+    position: relative;
+    bottom: -0.1875em;
+    background: #b9babe;
+    border-radius: 0 0 1.25em 1.25em;
+    }
+    .md-macbook-pro .md-base:before {
+    content: "";
+    display: block;
+    width: 7.6875em;
+    height: 0.625em;
+    margin: 0 auto;
+    position: relative;
+    background: #a6a8ad;
+    border-radius: 0 0 0.625em 0.625em;
+    }
+    .md-macbook-pro.md-glare .md-lid:after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0 1.25em 0 0;
+    background: -webkit-linear-gradient(37deg, rgba(255, 255, 255, 0) 50%, rgba(247, 248, 240, 0.025) 50%, rgba(250, 245, 252, 0.08));
+    background: -moz-linear-gradient(37deg, rgba(255, 255, 255, 0) 50%, rgba(247, 248, 240, 0.025) 50%, rgba(250, 245, 252, 0.08));
+    background: -o-linear-gradient(37deg, rgba(255, 255, 255, 0) 50%, rgba(247, 248, 240, 0.025) 50%, rgba(250, 245, 252, 0.08));
+    background: linear-gradient(53deg, rgba(255, 255, 255, 0) 50%, rgba(247, 248, 240, 0.025) 50%, rgba(250, 245, 252, 0.08));
+    }
+    @media (max-width:1199px){
+        .md-macbook-pro {
+            font-size: 11px;
+        }
+    }
+    @media (max-width:1024px){
+        .md-macbook-pro {
+            font-size: 10px;
+        }
+    }
+
+    @media (max-width:767px){
+        .md-macbook-pro {
+            font-size: 7px;
+        }
+    }
+
+    @media (max-width:320px){
+        .md-macbook-pro {
+            font-size: 5px;
+        }
+    }
+</style>
+
+{% block page_content %}
+
+    <div class="w3l_banner_nav_right">
+    <!-- services -->
+        <div class="services">
+            <h3>Как сделать заказ?</h3>
+            <div class="w3ls_service_grids">
+                <div class="col-md-5 w3ls_service_grid_left">
+                    <h4>Оформление заказа</h4>
+                    <p>
+                        Здесь мы вам покажим как оформить заказ на нашем сайте, пожалуйста, следуйте инструкциям ниже
+                    </p>
+                </div>
+                <div class="col-md-7 w3ls_service_grid_right">
+                    <div class="col-md-4 w3ls_service_grid_right_1">
+                        <img src="/static/images/hw_order1.jpg" alt="hw_order1" class="img-responsive" style="height: 120px;">
+                    </div>
+                    <div class="col-md-4 w3ls_service_grid_right_1">
+                        <img src="/static/images/hw_order2.jpg" alt="hw_order2" class="img-responsive" style="height: 120px;">
+                    </div>
+                    <div class="col-md-4 w3ls_service_grid_right_1">
+                        <img src="/static/images/hw_order3.jpg" alt="hw_order3" class="img-responsive" style="height: 120px;">
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="col-md-4">
+                <!-- begin panel group -->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    
+                    <!-- panel 1 -->
+                    <div class="panel panel-default">
+                        <!--wrap panel heading in span to trigger image change as well as collapse -->
+                        <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
+                            <div class="panel-heading" role="tab" id="headingOne"data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h6 class="panel-title"> <a href="">1. Выберите Каталог товаров</a> </h6>
+                            </div>
+                        </span>
+                        
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        </div>
+                    </div> 
+                    <!-- / panel 1 -->
+                    
+                    <!-- panel 2 -->
+                    <div class="panel panel-default">
+                        <!--wrap panel heading in span to trigger image change as well as collapse -->
+                        <span class="side-tab" data-target="#tab2" data-toggle="tab" role="tab" aria-expanded="false">
+                            <div class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <h6 class="panel-title collapsed"> <a href="">2. Выберите нужные товары</a></h6>
+                            </div>
+                        </span>
+
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        </div>
+                    </div>
+                    <!-- / panel 2 -->
+                    
+                        <!--  panel 3 -->
+                        <div class="panel panel-default">
+                        <!--wrap panel heading in span to trigger image change as well as collapse -->
+                            <span class="side-tab" data-target="#tab3" data-toggle="tab" role="tab" aria-expanded="false">
+                                <div class="panel-heading" role="tab" id="headingThree"  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <h6 class="panel-title"> <a href="">3. Добавьте выбранные товары в <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Корзину</a></h6>
+                                </div>
+                            </span>
+
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            </div>
+                        </div>
+
+                        <!--  panel 4 -->
+                        <div class="panel panel-default">
+                            <span class="side-tab" data-target="#tab4" data-toggle="tab" role="tab" aria-expanded="false">
+                                <div class="panel-heading" role="tab" id="headingThree"  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <h6 class="panel-title"> <a href="">4. Проверьте заказ</a> </h6>
+                                </div>
+                            </span>
+
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            </div>
+                        </div>
+
+                        <!--  panel 5 -->
+                        <div class="panel panel-default">
+                            <span class="side-tab" data-target="#tab5" data-toggle="tab" role="tab" aria-expanded="false">
+                                <div class="panel-heading" role="tab" id="headingThree"  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <h6 class="panel-title"><a href="">5. Введите личные данные</a></h6>
+                                </div>
+                            </span>
+
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            </div>
+                        </div>
+
+                        <!--  panel 6 -->
+                        <!-- <div class="panel panel-default">
+                            <span class="side-tab" data-target="#tab6" data-toggle="tab" role="tab" aria-expanded="false">
+                                <div class="panel-heading" role="tab" id="headingThree"  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <h6 class="panel-title"><a href="">6. Разместите заказ</a></h6>
+                                </div>
+                            </span>
+
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            </div>
+                        </div> -->
+                </div> <!-- / panel-group -->
+                
+            </div> <!-- /col-md-4 -->
+            
+            <div class="col-md-8">
+                <!-- begin macbook pro mockup -->
+                <div class="md-macbook-pro md-glare">
+                    <div class="md-lid">
+                        <div class="md-camera"></div>
+                        <div class="md-screen">
+                        <!-- content goes here -->                
+                            <div class="tab-featured-image">
+                                <div class="tab-content">
+                                    <div class="tab-pane  in active" id="tab1">
+                                        <p>Выберите пункт <strong style="color:#c30;">Каталог товаров</strong> в левом верхнем углу экрана. </p>
+                                        <!-- <img src="https://ununsplash.imgix.net/photo-1417024321782-1375735f8987?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive"> -->
+                                    </div>
+                                    <div class="tab-pane " id="tab2">
+                                        <p>Выберите нужный товар. <strong>Если не нашли нужный Вам товар , можете уточнить его наличие в Справочной Службе позвонив по номеру</strong><span style="color:#c30;"><br>+996 708 808 839</span></p>
+                                        <!-- <img src="https://unsplash.imgix.net/uploads/1411724908903377d4696/2e9b0cb2?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" class="img img-responsive"> -->
+                                    </div>
+                                    <div class="tab-pane fade" id="tab3">
+                                        <p>Добавьте нужный товар в Корзину, нажав на соответствующую кнопку <br> в корзине.</p>
+                                        <!-- <img src="https://ununsplash.imgix.net/photo-1422479516648-9b1f0b6e8da8?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive"> -->
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab4">
+                                        <p>Проверьте Ваш заказ в корзине и отредактируйте его при необходимости. Нажмите <strong style="color:#c30;"> Подтвердить заказ </strong></p>
+                                        <!-- <img src="https://ununsplash.imgix.net/photo-1422479516648-9b1f0b6e8da8?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive"> -->
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab5">
+                                        <p>Введите Ваши личные данные и адрес доставки; оставьте комментарий при необходимости и нажмите <strong style="color:#c30;">Разместить заказ.</strong></p>
+                                        <!-- <img src="https://ununsplash.imgix.net/photo-1422479516648-9b1f0b6e8da8?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive"> -->
+                                    </div>
+
+                                    <!-- <div class="tab-pane fade" id="tab6">
+                                        <img src="https://ununsplash.imgix.net/photo-1422479516648-9b1f0b6e8da8?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive">
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-base"></div>
+                </div> <!-- end macbook pro mockup -->
+            </div>
+            <!-- <div class="w3ls_service_grids1">
+                <div class="col-md-6 w3ls_service_grids1_left">
+                    <img src="/static/images/4.jpg" alt=" " class="img-responsive">
+                </div>
+                <div class="col-md-6 w3ls_service_grids1_right">
+                    <ul>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>et voluptates repudiandae sint et molestiae</li>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>rerum necessitatibus saepe eveniet ut</li>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>placeat facere possimus, omnis voluptas</li>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>Et harum quidem rerum facilis est et expedita</li>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>similique sunt in culpa qui officia deserunt</li>
+                        <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i>odio dignissimos ducimus qui blanditiis</li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div> -->
+        </div>
+    <!-- //services -->
+        </div>
+    <div class="clearfix"></div>
+{% endblock %}
