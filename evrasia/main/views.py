@@ -37,11 +37,6 @@ def css_provider(filename):
 def js_provider(filename):
 	return send_from_directory(os.path.join(current_app.root_path, 'static', 'js'), filename)
 
-@main_route.route('/test', methods=['POST'])
-@csrf.exempt
-def test():
-	return jsonify({'token':session.get('csrf_session_token')})
-
 @main_route.route('/')
 @main_route.route('/pharm')
 def index():
