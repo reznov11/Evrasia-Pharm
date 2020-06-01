@@ -17,7 +17,7 @@ from ..helpers import validNumber
 def categories():
 	g.category = Category.query.order_by(Category.name)
 	g.subscriber = Subscribers()
-	items = session["cart"] if 'cart' in session else []
+	items = session.get("cart", [])
 	dict_of_products = {}
 	for item in items:
 		product = Product.query.filter_by(public_id=item).first()
