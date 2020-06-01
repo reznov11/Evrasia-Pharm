@@ -116,26 +116,7 @@ def rate_product():
             return jsonify({'was_voted':'Уже поставили рейтинг'})
         if product_exist:
             vote = Rate()
-            if int(get_data['rate_star']) == 1:
-                vote.rate = 10
-            if int(get_data['rate_star']) == 2:
-                vote.rate = 20
-            if int(get_data['rate_star']) == 3:
-                vote.rate = 30
-            if int(get_data['rate_star']) == 4:
-                vote.rate = 40
-            if int(get_data['rate_star']) == 5:
-                vote.rate = 50
-            if int(get_data['rate_star']) == 6:
-                vote.rate = 60
-            if int(get_data['rate_star']) == 7:
-                vote.rate = 70
-            if int(get_data['rate_star']) == 8:
-                vote.rate = 80
-            if int(get_data['rate_star']) == 9:
-                vote.rate = 90
-            if int(get_data['rate_star']) == 10:
-                vote.rate = 100
+            vote.rate = int(get_data['rate_star']) * 10
             vote.user_id = current_user.id
             vote.product_id = product_exist.id
             db.session.add(vote)
