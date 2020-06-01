@@ -15,7 +15,7 @@ from flask_login import current_user,login_required
 def categories():
     g.category = Category.query.order_by(Category.name)
     g.subscriber = Subscribers()
-    items = session["cart"] if 'cart' in session else []
+    items = session.get("cart", [])
     dict_of_products = {}
     total_price = 0
     for item in items:
